@@ -46,6 +46,11 @@ class HangmanGame
     
     check_game_end
   end
+
+  def word
+    return unless @lose
+    @word
+  end
   
   private
   
@@ -61,9 +66,9 @@ class HangmanGame
   
   def check_game_end
     if @progress.all?
-      win = true
+      @win = true
     elsif @incorrect_letters.length >= INCORRECT_GUESS_LIMIT
-      lose = true
+      @lose = true
     end
   end
 
@@ -73,10 +78,5 @@ class HangmanGame
     result << f.read
     f.close
     result
-  end
-    
-    
-  
-  def win
   end
 end
