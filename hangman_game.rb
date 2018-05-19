@@ -12,16 +12,32 @@ class HangmanGame
     @progress = Array.new(@word.length)
   end
   
+  def to_s
+    result = ""
+    
+    progress_string = @progress.map do |letter|
+      if letter
+        letter
+      else
+        "_"
+      end
+    end
+    result += progress_string.join(" ") + "\n"
+    
+    guesses_left = INCORRECT_GUESS_LIMIT - @incorrect_guesses
+    result + "Incorrect guesses left: #{guesses_left}"
+  end
+  
   def guess(guess_letter)
     guess_letter.upcase!
     return false if @guessed_letters.include?(guess_letter)
     
     if @word.include?(guess_letter)
-      @incorrect_guesses += 1
-    else
-      @word.each_with_index do |letter, i| 
+      @word.split("").each_with_index do |letter, i| 
         @progress[i] = guess_letter if letter == guess_letter
       end
+    else
+      @incorrect_guesses += 1
     end
     
     check_game_end
