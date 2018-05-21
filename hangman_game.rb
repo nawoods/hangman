@@ -1,15 +1,33 @@
+require 'yaml'
+
 class HangmanGame
   INCORRECT_GUESS_LIMIT = 6
   
   attr_reader :incorrect_letters, :win, :lose
-  
-  def initialize
+
+  def self.from_yaml(string)
+    data = YAML.load(string)
+    self.new(data[:word], data[:incorrect_letters], 
+             data[:guessed_letters], data[:progress])
+  end
+
+  def initialize(word = nil, incorrect_letters = nil, 
+                 guessed_letters = nil, progress = nil)
     @win = false
     @lose = false
-    @word = random_word
-    @incorrect_letters = []
-    @guessed_letters = []
-    @progress = Array.new(@word.length)
+    @word ||= random_word
+    @incorrect_letters ||= []
+    @guessed_letters ||= []
+    @progress ||= Array.new(@word.length)
+  end
+
+  def to_yaml
+    YAML.dump ({
+      :word => @word,
+      :incorrect_letters => @incorrect_letters,
+      :guessed_letters => @guessed_letters,
+      :progress => @progress
+    })
   end
   
   def to_s
@@ -50,6 +68,10 @@ class HangmanGame
   def word
     return unless @lose
     @word
+  end
+
+  def first_turn?
+    return @guessed_letters.length == 0
   end
   
   private
