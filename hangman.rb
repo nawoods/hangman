@@ -50,7 +50,7 @@ class Hangman
   def save_game
     filepath = prompt("Please enter filename: ", /^[^\/\\]+$/)
     if File.exist?(filepath)
-      response = prompt("File already exists. Overwrite? (y/n)", /^[yn]/i)
+      response = prompt("File already exists. Overwrite? (y/n): ", /^[yn]/i)
       return if response =~ /^n/i
     end
 

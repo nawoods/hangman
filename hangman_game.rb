@@ -15,10 +15,10 @@ class HangmanGame
                  guessed_letters = nil, progress = nil)
     @win = false
     @lose = false
-    @word ||= random_word
-    @incorrect_letters ||= []
-    @guessed_letters ||= []
-    @progress ||= Array.new(@word.length)
+    @word = word ? word : random_word
+    @incorrect_letters = incorrect_letters ? incorrect_letters : []
+    @guessed_letters = guessed_letters ? guessed_letters : []
+    @progress = progress ? progress : Array.new(@word.length)
   end
 
   def to_yaml
